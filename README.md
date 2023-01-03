@@ -353,4 +353,15 @@ Now, I will explain how to install and run on the server side
 3. cd server
 4. npm init -y
 5. npm install cors dotenv nodemon openai
+6. npm install express
 ```
+
+
+
+
+
+## Reference
+
+- **[Javascript Mastery](https://www.youtube.com/watch?v=2FeymQoKvrk&t=2662s)**
+- **[openAI_API](https://beta.openai.com/overview)**
+
