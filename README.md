@@ -6,7 +6,7 @@ Here I will explain how to make a popular gpt chat using the help of node.js
 ![image](https://user-images.githubusercontent.com/92671053/210306472-a6fa18f9-1574-4632-979c-3d717f8d9cc2.png)
 
 
-# Installation and Run
+# Installation
 
 ## Client Server
 
@@ -42,7 +42,7 @@ In the ``index.html`` file the code is as follows
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Codex - Your AI</title>
+    <title>Your AI</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
@@ -354,9 +354,130 @@ Now, I will explain how to install and run on the server side
 4. npm init -y
 5. npm install cors dotenv nodemon openai
 6. npm install express
+7. Create file .env 
 ```
 
+later the temporary server side folder is as follows
 
+![image](https://user-images.githubusercontent.com/92671053/210457082-b59e080f-37a1-43fa-ae0b-45d9c7533078.png)
+
+And all the files are
+
+![image](https://user-images.githubusercontent.com/92671053/210458270-f2c6f244-68e2-4639-9075-52c420394b9f.png)
+
+In the .env file you will fill in the API token obtained from [openAi](https://openai.com/api/)
+
+my .env file 
+```env
+OPENAI_API_KEY="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"
+```
+
+To get the token API, the steps are as follows
+```
+1. Create an account
+2. Press your profile, then look for [View API Keys]
+3. Search for API Keys
+4. Create a new secret key
+5. Copy the token, then put it in your .env file
+```
+
+Then open your ``package.json`` file, replace it as follows
+```json
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "server": "nodemon server"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "nodemon": "^2.0.20",
+    "openai": "^3.1.0"
+  }
+}
+
+```
+
+Then open your ``server.js`` file, and fill it as follows
+
+```js
+import express from 'express';
+import * as dotenv from 'dotenv';
+import cors from 'cors';
+import { Configuration,  OpenAIApi } from 'openai';
+
+dotenv.config();
+
+const configuration = new Configuration({
+    apiKey: process.env.OPENAI_API_KEY,
+}); 
+
+console.log(process.env.OPENAI_API_KEY);
+
+const openAi = new OpenAIApi(configuration);
+
+const app = express();
+app.use(cors());
+app.use(express.json());
+
+app.get('/', async(req, res) => {
+    res.status(200).send({
+        message: "Welcome",
+    })
+});
+
+app.post('/', async(req, res) => {
+    try {
+        const prompt = req.body.prompt;
+
+        const respone = await openAi.createCompletion({
+            model: "text-davinci-003",
+            prompt: `${prompt}`,
+            temperature: 0,
+            max_tokens: 3000,
+            top_p: 1,
+            frequency_penalty: 0.5,
+            presence_penalty: 0,
+        });
+
+        res.status(200).send({
+            bot: respone.data.choices[0].text
+        });
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error || 'Something went wrong');
+    }
+});
+
+app.listen(5000, () => console.log('AI server started on http://localhost:5000'))
+```
+
+# How To Run?
+After following the tutorial above, here's how to run it
+
+For Client
+```
+1. Open terminal
+2. cd client
+3. npm run dev
+```
+
+For Server
+```
+1. Open terminal
+2. cd server
+3. npm run server
+```
+
+![image](https://user-images.githubusercontent.com/92671053/210458579-7d11f1d5-2bc5-476e-8b88-8601f040c1fe.png)
 
 
 
