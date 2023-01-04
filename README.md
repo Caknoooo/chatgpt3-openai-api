@@ -472,9 +472,6 @@ For Server
 3. npm run server
 ```
 
-![image](https://user-images.githubusercontent.com/92671053/210458579-7d11f1d5-2bc5-476e-8b88-8601f040c1fe.png)
-
-
 
 ## Reference
 
