@@ -367,11 +367,6 @@ And all the files are
 
 In the .env file you will fill in the API token obtained from [openAi](https://openai.com/api/)
 
-my .env file 
-```env
-OPENAI_API_KEY="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"
-```
-
 To get the token API, the steps are as follows
 ```
 1. Create an account
